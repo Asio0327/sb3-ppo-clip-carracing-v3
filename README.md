@@ -7,7 +7,11 @@ This repository implements **Proximal Policy Optimization (PPO)** for `CarRacing
 - Video: `python scripts/record_video.py --config configs/default.yaml --checkpoint <path>`
 - Sweep: `python scripts/sweep.py --sweep configs/sweep.yaml`
 
-![Car Racing](https://gymnasium.farama.org/_images/car_racing.gif)
+**Policy rollout video** (best model):
+
+<video src="https://github.com/user-attachments/assets/20a5b291-d0a4-48c0-b543-328bb94bfde1" controls width="600">
+  Your browser does not support the video tag.
+</video>
 
 ---
 
@@ -101,15 +105,6 @@ These settings were found to be stable and effective for CarRacing PPO:
 | grayscale | true |
 | resize | 84 |
 
----
-
-## Best Model Outputs
-
-**Policy rollout video** (best model):
-
-<video src="https://github.com/user-attachments/assets/20a5b291-d0a4-48c0-b543-328bb94bfde1" controls width="600">
-  Your browser does not support the video tag.
-</video>
 
 ---
 
