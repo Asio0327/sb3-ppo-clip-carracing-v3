@@ -26,3 +26,15 @@ experiments/*
 
 # TensorBoard
 runs/
+
+# Offline RL datasets
+data/expert/
+*.h5
+*.hdf5
+
+# PyTorch checkpoints
+*.pt
+*.pth
+
+# Training logs
+*.log

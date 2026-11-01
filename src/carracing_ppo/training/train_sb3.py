@@ -5,7 +5,7 @@ from typing import Any, Dict, Optional
 
 import torch
 from stable_baselines3 import PPO
-from stable_baselines3.common.callbacks import EvalCallback
+from stable_baselines3.common.callbacks import (EvalCallback,CheckpointCallback,CallbackList)
 
 from carracing_ppo.envs.carracing import make_carracing_vec_env
 from carracing_ppo.training.eval_sb3 import evaluate
@@ -83,6 +83,17 @@ def train(cfg: Dict[str, Any]) -> str:
         deterministic=bool(cfg.get("deterministic_eval", True)),
         render=False,
     )
+    checkpoint_callback = CheckpointCallback(
+        save_freq=max(100000 // train_env.num_envs, 1),
+        save_path=os.path.join(models_dir, "checkpoints"),
+        name_prefix="ppo",
+        verbose=2,
+    )
+
+    callbacks = CallbackList([
+        eval_callback,
+        checkpoint_callback,
+    ]	)
 
     policy = str(cfg.get("policy", "CnnPolicy"))
 
@@ -106,7 +117,7 @@ def train(cfg: Dict[str, Any]) -> str:
     )
 
     total_timesteps = int(cfg.get("total_timesteps", 3_000_000))
-    model.learn(total_timesteps=total_timesteps, callback=eval_callback, progress_bar=True)
+    model.learn(total_timesteps=total_timesteps, callback=callbacks, progress_bar=True)
 
     # Save final model
     final_path = os.path.join(models_dir, "final_model.zip")

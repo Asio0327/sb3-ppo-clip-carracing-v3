@@ -16,10 +16,15 @@ def _make_preprocess_wrapper(grayscale: bool, resize: Optional[int]):
     - ResizeObservation -> (resize, resize)
     """
     def _wrap(env: gym.Env) -> gym.Env:
-        if grayscale:
-            env = gym.wrappers.GrayScaleObservation(env, keep_dim=True)
         if resize is not None:
-            env = gym.wrappers.ResizeObservation(env, (resize, resize))
+            env = gym.wrappers.ResizeObservation(
+                env, (resize, resize)
+            )
+
+        if grayscale:
+            env = gym.wrappers.GrayscaleObservation(
+                env, keep_dim=True
+            )
         return env
 
     return _wrap
